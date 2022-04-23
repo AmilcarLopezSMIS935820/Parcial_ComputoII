@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Entertainment;
+
 class EntertainmentController extends Controller
 {
     /**
@@ -10,9 +12,11 @@ class EntertainmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $entertaiment = Entertainment::all();
+        return $entertaiment;
     }
 
     /**
@@ -34,6 +38,11 @@ class EntertainmentController extends Controller
     public function store(Request $request)
     {
         //
+        $entertainment = new Entertainment;
+        $entertainment->nombre = $request->input('nombre');
+        $entertainment->genero = $request->input('genero');
+        $entertainment->categoria = $request->input('categoria');
+        $entertainment->save();
     }
 
     /**
@@ -45,6 +54,7 @@ class EntertainmentController extends Controller
     public function show($id)
     {
         //
+        return Entertainment::findOrFail($id);
     }
 
     /**
@@ -68,6 +78,13 @@ class EntertainmentController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $entertainment = new Entertainment;
+        $entertainment->nombre = $request->input('nombre');
+        $entertainment->genero = $request->input('genero');
+        $entertainment->categoria = $request->input('categoria');
+        $entertainment->save();
+
+        return $entertainment;
     }
 
     /**
@@ -79,5 +96,7 @@ class EntertainmentController extends Controller
     public function destroy($id)
     {
         //
+        $entertainment = Entertainment::findOrFail($id);
+        $entertainment->delete();
     }
 }
